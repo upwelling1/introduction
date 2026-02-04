@@ -12,26 +12,25 @@
     margin: 0;
     padding: 0;
     font-family: "Noto Sans TC", sans-serif;
-    background: linear-gradient(135deg, #1a3f6f, #006b8f);
+    background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77); /* 深色漸層 */
     color: white;
+    overflow-x: hidden;
   }
 
-  /* 粒子 canvas */
+  /* 粒子 Canvas */
   #bgCanvas {
     position: fixed;
     top:0; left:0;
-    width:100vw;
-    height:100vh;
+    width:100vw; height:100vh;
     z-index:-9999;
   }
 
   /* header */
   header {
-    padding: 60px 20px 20px;
+    padding:60px 20px 20px;
     text-align:center;
     background: transparent;
   }
-
   header h1 { font-size:32px; margin:10px 0; }
   header p.tagline { max-width:600px; margin:0 auto; line-height:1.6; }
 
@@ -40,14 +39,14 @@
     display:flex; flex-direction:column; align-items:center; gap:12px; margin:30px 0;
   }
   .link-buttons a {
-    text-decoration:none; background: rgba(0,0,0,0.7); color:white;
+    text-decoration:none; background: rgba(0,0,0,0.5); color:white;
     padding:12px 20px; border-radius:10px; width:80%; max-width:300px; font-weight:500;
     transition:0.3s;
   }
   .link-buttons a:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
 
   /* 輪播 */
-  .slider { position:relative; max-width:400px; margin:30px auto; overflow:hidden; border-radius:12px; }
+  .slider { position:relative; max-width:400px; margin:30px auto; overflow:hidden; border-radius:12px; background: rgba(0,0,0,0.4); }
   .slides { display:flex; transition: transform 0.5s ease-in-out; }
   .slide { min-width:100%; }
   .slide img { width:100%; border-radius:12px; display:block; }
@@ -57,7 +56,7 @@
     cursor:pointer;
   }
   .prev { left:10px; } .next { right:10px; }
-  .prev:hover, .next:hover { background: rgba(0,0,0,0.8); }
+  .prev:hover, .next:hover { background: rgba(255,255,255,0.8); }
 
   /* 小圓點 */
   .dots { text-align:center; margin-top:10px; }
@@ -70,7 +69,7 @@
   /* 服務區 */
   .services { text-align:center; margin:50px 20px; }
   .service-list { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
-  .service-item { background: rgba(0,0,0,0.5); padding:20px; border-radius:10px; width:250px; }
+  .service-item { background: rgba(0,0,0,0.6); padding:20px; border-radius:10px; width:250px; }
 
   /* footer */
   .footer { text-align:center; margin:40px 0 20px; font-size:14px; }
@@ -166,40 +165,77 @@
 
   setInterval(()=>{ index=(index+1)%totalSlides; updateSlide(); }, 4000);
 
-  /* ==== 粒子背景 ==== */
+  /* ==== 粒子背景 + 連線 + 滑鼠互動 ==== */
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-  const particles=[];
+
+  let mouseX = canvas.width/2;
+  let mouseY = canvas.height/2;
+
+  window.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  const particles = [];
   for(let i=0;i<80;i++){
     particles.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height,
-      r:Math.random()*3+1,
-      dx:(Math.random()-0.5)*0.5,
-      dy:(Math.random()-0.5)*0.5
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      r: Math.random()*3+1,
+      dx: (Math.random()-0.5)*0.5,
+      dy: (Math.random()-0.5)*0.5
     });
   }
 
   function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(let p of particles){
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(255,255,255,0.3)';
-      ctx.fill();
-      p.x+=p.dx; p.y+=p.dy;
+
+    for(let i=0;i<particles.length;i++){
+      const p = particles[i];
+
+      // 粒子跟隨滑鼠微移
+      p.dx += (mouseX - p.x) * 0.0005;
+      p.dy += (mouseY - p.y) * 0.0005;
+
+      p.x += p.dx; p.y += p.dy;
+
+      // 邊界反彈
       if(p.x<0||p.x>canvas.width) p.dx*=-1;
       if(p.y<0||p.y>canvas.height) p.dy*=-1;
+
+      // 畫粒子
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,0.2)';
+      ctx.fill();
+
+      // 粒子連線
+      for(let j=i+1;j<particles.length;j++){
+        const p2 = particles[j];
+        const dx = p.x - p2.x;
+        const dy = p.y - p2.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist<120){
+          ctx.strokeStyle = `rgba(255,255,255,${0.1*(1-dist/120)})`;
+          ctx.beginPath();
+          ctx.moveTo(p.x,p.y);
+          ctx.lineTo(p2.x,p2.y);
+          ctx.stroke();
+        }
+      }
     }
+
     requestAnimationFrame(animate);
   }
-  animate();
 
-  window.addEventListener('resize',()=>{
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
+  animate();
 </script>
 
 </body>
