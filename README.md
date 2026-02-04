@@ -1,4 +1,5 @@
 
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
@@ -6,17 +7,17 @@
   <title>Evan Website Studio</title>
   <style>
     /* ===== 全站背景 ===== */
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
       margin: 0;
+      padding: 0;
       font-family: "Noto Sans TC", sans-serif;
 
-      /* 漸層背景 */
+      /* 漸層 + 圓點網格 */
       background: linear-gradient(135deg, #4facfe, #00f2fe);
-
-      /* 圓點網格疊加 */
       background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
       background-size: 30px 30px;
-
       background-repeat: repeat;
       background-attachment: fixed;
       color: white;
@@ -27,12 +28,12 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1; /* 放在最底層 */
+      width: 100vw;
+      height: 100vh;
+      z-index: -9999;
     }
 
-    /* ===== Header / 自我介紹區 ===== */
+    /* ===== Header / 自我介紹 ===== */
     header {
       padding: 60px 20px 20px;
       text-align: center;
@@ -52,7 +53,7 @@
       line-height: 1.6;
     }
 
-    /* ===== 連結按鈕 ===== */
+    /* ===== 主連結按鈕 ===== */
     .link-buttons {
       display: flex;
       flex-direction: column;
@@ -86,6 +87,7 @@
       overflow: hidden;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      background: transparent;
     }
 
     .slides {
@@ -100,6 +102,7 @@
     .slide img {
       width: 100%;
       display: block;
+      border-radius: 12px;
     }
 
     /* 輪播箭頭 */
@@ -120,6 +123,27 @@
 
     .prev:hover, .next:hover {
       background-color: rgba(0,0,0,0.8);
+    }
+
+    /* 輪播小圓點 */
+    .dots {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 6px;
+      background-color: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dot.active {
+      background-color: white;
     }
 
     /* ===== 服務區 ===== */
@@ -159,6 +183,7 @@
     @media (max-width: 768px) {
       .slider { max-width: 90%; }
       .link-buttons a { width: 90%; }
+      .service-item { width: 80%; }
     }
   </style>
 </head>
@@ -170,7 +195,7 @@
   <header>
     <h1>Evan Website Studio</h1>
     <p class="tagline">
-      嗨，我是 Evan，專門幫個人與品牌打造乾淨、有設計感的網站。  
+      嗨，我是 Evan，專門幫個人與品牌打造乾淨、有設計感的網站。<br>
       不論是個人介紹頁、活動宣傳或作品集網站，我都能協助從設計到上線，讓你的品牌更有質感。
     </p>
   </header>
@@ -192,6 +217,9 @@
     </div>
     <button class="prev" id="prev">❮</button>
     <button class="next" id="next">❯</button>
+
+    <!-- 小圓點指示器 -->
+    <div class="dots" id="dots"></div>
   </section>
 
   <!-- 服務區 -->
@@ -221,10 +249,33 @@
 
   <!-- ===== Script ===== -->
   <script>
-    /* ==== 輪播功能 ==== */
+    /* ==== 輪播功能 + 小圓點 ==== */
     const slides = document.getElementById('slides');
     const totalSlides = slides.children.length;
     let index = 0;
+
+    const dotsContainer = document.getElementById('dots');
+
+    // 產生小圓點
+    for(let i=0; i<totalSlides; i++){
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if(i===0) dot.classList.add('active');
+      dot.addEventListener('click', ()=>{
+        index = i;
+        updateSlide();
+      });
+      dotsContainer.appendChild(dot);
+    }
+
+    function updateSlide(){
+      slides.style.transform = `translateX(-${index * 100}%)`;
+      const allDots = dotsContainer.children;
+      for(let i=0; i<allDots.length; i++){
+        allDots[i].classList.remove('active');
+      }
+      allDots[index].classList.add('active');
+    }
 
     document.getElementById('next').addEventListener('click', () => {
       index = (index + 1) % totalSlides;
@@ -235,10 +286,6 @@
       index = (index - 1 + totalSlides) % totalSlides;
       updateSlide();
     });
-
-    function updateSlide() {
-      slides.style.transform = `translateX(-${index * 100}%)`;
-    }
 
     setInterval(() => {
       index = (index + 1) % totalSlides;
