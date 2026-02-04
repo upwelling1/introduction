@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
     font-family: "Noto Sans TC", sans-serif;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    background: linear-gradient(135deg, #1a3f6f, #006b8f);
     color: white;
   }
 
