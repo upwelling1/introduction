@@ -1,11 +1,10 @@
-
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evan Website Studio</title>
 <style>
-  /* 全站背景 */
   html, body {
     width: 100%;
     height: 100%;
@@ -17,15 +16,13 @@
     overflow-x: hidden;
   }
 
-  /* 粒子 Canvas */
   #bgCanvas {
     position: fixed;
     top:0; left:0;
     width:100vw; height:100vh;
-    z-index:-1; /* 放背景 */
+    z-index:-1;
   }
 
-  /* header */
   header {
     padding:60px 20px 20px;
     text-align:center;
@@ -34,7 +31,6 @@
   header h1 { font-size:32px; margin:10px 0; }
   header p.tagline { max-width:600px; margin:0 auto; line-height:1.6; }
 
-  /* 連結按鈕 */
   .link-buttons {
     display:flex; flex-direction:column; align-items:center; gap:12px; margin:30px 0;
   }
@@ -45,7 +41,6 @@
   }
   .link-buttons a:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
 
-  /* 輪播 */
   .slider { position:relative; max-width:400px; margin:30px auto; overflow:hidden; border-radius:12px; background: rgba(0,0,0,0.4); }
   .slides { display:flex; transition: transform 0.5s ease-in-out; }
   .slide { min-width:100%; }
@@ -58,7 +53,6 @@
   .prev { left:10px; } .next { right:10px; }
   .prev:hover, .next:hover { background: rgba(255,255,255,0.8); }
 
-  /* 小圓點 */
   .dots { text-align:center; margin-top:10px; }
   .dot {
     display:inline-block; width:10px; height:10px; margin:0 6px;
@@ -66,15 +60,12 @@
   }
   .dot.active { background:white; }
 
-  /* 服務區 */
   .services { text-align:center; margin:50px 20px; }
   .service-list { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
   .service-item { background: rgba(0,0,0,0.6); padding:20px; border-radius:10px; width:250px; }
 
-  /* footer */
   .footer { text-align:center; margin:40px 0 20px; font-size:14px; }
 
-  /* 響應式 */
   @media (max-width:768px){
     .slider { max-width:90%; }
     .link-buttons a { width:90%; }
@@ -165,7 +156,7 @@ document.getElementById('prev').addEventListener('click',()=>{
 
 setInterval(()=>{ index=(index+1)%totalSlides; updateSlide(); }, 4000);
 
-/* ==== 粒子背景 + 連線 + 滑鼠互動 ==== */
+/* ==== 彩色流光粒子背景 ==== */
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -177,14 +168,16 @@ let mouseY = canvas.height/2;
 window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
 window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
+const colors = ["#ff4d4d","#ff944d","#fff44d","#4dff4d","#4dffff","#4d4dff","#ff4dff"];
 const particles = [];
 for(let i=0;i<80;i++){
   particles.push({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
-    r: Math.random()*3+1,
-    dx: (Math.random()-0.5)*0.5,
-    dy: (Math.random()-0.5)*0.5
+    r: Math.random()*2+1,
+    dx: (Math.random()-0.5)*0.7,
+    dy: (Math.random()-0.5)*0.7,
+    color: colors[Math.floor(Math.random()*colors.length)]
   });
 }
 
@@ -201,14 +194,13 @@ function animate(){
     p.x += p.dx;
     p.y += p.dy;
 
-    // 邊界反彈
     if(p.x<0||p.x>canvas.width) p.dx*=-1;
     if(p.y<0||p.y>canvas.height) p.dy*=-1;
 
     // 畫粒子
     ctx.beginPath();
     ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillStyle = p.color;
     ctx.fill();
 
     // 畫連線
@@ -218,7 +210,11 @@ function animate(){
       const dy = p.y - p2.y;
       const dist = Math.sqrt(dx*dx + dy*dy);
       if(dist<120){
-        ctx.strokeStyle = `rgba(255,255,255,${0.1*(1-dist/120)})`;
+        const alpha = 0.2*(1-dist/120);
+        const grad = ctx.createLinearGradient(p.x,p.y,p2.x,p2.y);
+        grad.addColorStop(0,p.color+"88");
+        grad.addColorStop(1,p2.color+"88");
+        ctx.strokeStyle = grad;
         ctx.beginPath();
         ctx.moveTo(p.x,p.y);
         ctx.lineTo(p2.x,p2.y);
