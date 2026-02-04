@@ -55,10 +55,7 @@
   <header>
     <h1>Evan Website Studio</h1>
     <div class="menu-toggle" id="menu-toggle">☰</div>
-    <nav id="nav">
-      <a href="#about" class="active">首頁</a>
-      <a href="#works">作品範例</a>
-    </nav>
+   
   </header>
 
   <section id="about" class="intro">
