@@ -54,3 +54,120 @@
   </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品範例 | Evan Website Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* 輪播區塊基本樣式 */
+    .slider {
+      position: relative;
+      max-width: 800px;
+      margin: 50px auto;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .slide img {
+      width: 100%;
+      display: block;
+    }
+
+    /* 左右箭頭 */
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Evan Website Studio</h1>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <nav id="nav">
+      <a href="index.html">首頁</a>
+      <a href="works.html" class="active">作品範例</a>
+    </nav>
+  </header>
+
+  <section class="works">
+    <h2>作品範例展示</h2>
+    <div class="slider">
+      <div class="slides" id="slides">
+        <div class="slide"><img src="images/work1.jpg" alt="作品1"></div>
+        <div class="slide"><img src="images/work2.jpg" alt="作品2"></div>
+        <div class="slide"><img src="images/work3.jpg" alt="作品3"></div>
+      </div>
+      <button class="prev" id="prev">❮</button>
+      <button class="next" id="next">❯</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Evan Website Studio | 聯絡方式：<a href="mailto:upwelling11@gmail.com">upwelling11@gmail.com</a></p>
+  </footer>
+
+  <script>
+    // 漢堡選單切換
+    const toggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav');
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('show');
+    });
+
+    // 輪播功能
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    let index = 0;
+
+    document.getElementById('next').addEventListener('click', () => {
+      index = (index + 1) % totalSlides;
+      updateSlide();
+    });
+
+    document.getElementById('prev').addEventListener('click', () => {
+      index = (index - 1 + totalSlides) % totalSlides;
+      updateSlide();
+    });
+
+    function updateSlide() {
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    // 自動播放（可選）
+    setInterval(() => {
+      index = (index + 1) % totalSlides;
+      updateSlide();
+    }, 4000);
+  </script>
+</body>
+</html>
