@@ -57,20 +57,6 @@
     <div class="menu-toggle" id="menu-toggle">☰</div>
    
   </header>
-
-   <!-- 作品範例區（輪播） -->
-  <section id="works" class="works">
-    <h2>作品範例展示</h2>
-    <div class="slider">
-      <div class="slides" id="slides">
-        <div class="slide"><img src="images/work1.jpg" alt="作品1"></div>
-        <div class="slide"><img src="images/work2.jpg" alt="作品2"></div>
-        <div class="slide"><img src="images/work3.jpg" alt="作品3"></div>
-      </div>
-      <button class="prev" id="prev">❮</button>
-      <button class="next" id="next">❯</button>
-    </div>
-  </section>
   
   <section id="about" class="intro">
     <h2>關於我</h2>
@@ -95,8 +81,20 @@
       </div>
     </div>
   </section>
-
- 
+  
+  <!-- 作品範例區（輪播） -->
+  <section id="works" class="works">
+    <h2>作品範例展示</h2>
+    <div class="slider">
+      <div class="slides" id="slides">
+        <div class="slide"><img src="images/work1.jpg" alt="作品1"></div>
+        <div class="slide"><img src="images/work2.jpg" alt="作品2"></div>
+        <div class="slide"><img src="images/work3.jpg" alt="作品3"></div>
+      </div>
+      <button class="prev" id="prev">❮</button>
+      <button class="next" id="next">❯</button>
+    </div>
+  </section> 
 
   <footer>
     <p>© 2026 Evan Website Studio | 聯絡方式：<a href="mailto:upwelling11@gmail.com">upwelling11@gmail.com</a></p>
