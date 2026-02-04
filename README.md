@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Evan Website Studio</title>
-  <link rel="stylesheet" href="style.css">
   <style>
-    /* ===== 背景樣式 ===== */
+    /* ===== 全站背景 ===== */
     body {
       margin: 0;
       font-family: "Noto Sans TC", sans-serif;
@@ -20,6 +19,7 @@
 
       background-repeat: repeat;
       background-attachment: fixed;
+      color: white;
     }
 
     /* 粒子 canvas */
@@ -29,26 +29,28 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      z-index: -1; /* 放在最底層 */
     }
 
-    /* ===== Header / Hero ===== */
+    /* ===== Header / 自我介紹區 ===== */
     header {
-      padding: 50px 20px 20px;
+      padding: 60px 20px 20px;
       text-align: center;
-      color: white;
+      background: transparent;
     }
 
-    header img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid white;
+    header h1 {
+      margin: 10px 0;
+      font-size: 32px;
     }
 
-    h1 { margin: 15px 0 5px; font-size: 28px; }
-    p.tagline { font-size: 16px; color: #f0f0f0; }
+    header p.tagline {
+      font-size: 16px;
+      color: #f0f0f0;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
 
     /* ===== 連結按鈕 ===== */
     .link-buttons {
@@ -100,7 +102,7 @@
       display: block;
     }
 
-    /* 箭頭（可選） */
+    /* 輪播箭頭 */
     .prev, .next {
       position: absolute;
       top: 50%;
@@ -118,6 +120,31 @@
 
     .prev:hover, .next:hover {
       background-color: rgba(0,0,0,0.8);
+    }
+
+    /* ===== 服務區 ===== */
+    .services {
+      text-align: center;
+      margin: 50px 20px;
+    }
+
+    .services h2 {
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .service-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .service-item {
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+      border-radius: 10px;
+      width: 250px;
     }
 
     /* ===== Footer ===== */
@@ -139,11 +166,13 @@
   <!-- 粒子背景 -->
   <canvas id="bgCanvas"></canvas>
 
-  <!-- Header / Hero -->
+  <!-- Header / 自我介紹 -->
   <header>
-    <img src="images/profile.jpg" alt="Evan 頭像">
     <h1>Evan Website Studio</h1>
-    <p class="tagline">打造乾淨、有質感的個人與品牌網站</p>
+    <p class="tagline">
+      嗨，我是 Evan，專門幫個人與品牌打造乾淨、有設計感的網站。  
+      不論是個人介紹頁、活動宣傳或作品集網站，我都能協助從設計到上線，讓你的品牌更有質感。
+    </p>
   </header>
 
   <!-- 主連結區 -->
@@ -165,19 +194,19 @@
     <button class="next" id="next">❯</button>
   </section>
 
-  <!-- 服務項目 -->
-  <section id="services" class="services" style="color:white; text-align:center; margin:50px 20px;">
+  <!-- 服務區 -->
+  <section id="services" class="services">
     <h2>服務項目</h2>
-    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:20px;">
-      <div style="background:rgba(0,0,0,0.5); padding:20px; border-radius:10px; width:250px;">
+    <div class="service-list">
+      <div class="service-item">
         <h3>客製網站設計</h3>
         <p>依照需求設計專屬頁面，展現個人或品牌特色。</p>
       </div>
-      <div style="background:rgba(0,0,0,0.5); padding:20px; border-radius:10px; width:250px;">
+      <div class="service-item">
         <h3>GitHub Pages 架設</h3>
         <p>協助設定並上線網站，穩定又方便。</p>
       </div>
-      <div style="background:rgba(0,0,0,0.5); padding:20px; border-radius:10px; width:250px;">
+      <div class="service-item">
         <h3>RWD 響應式設計</h3>
         <p>手機、平板、電腦皆完美呈現，給訪客最佳瀏覽體驗。</p>
       </div>
