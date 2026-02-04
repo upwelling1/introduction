@@ -52,6 +52,7 @@
   </style>
 </head>
 <body>
+  <canvas id="bgCanvas"></canvas>
   <header>
     <h1>Evan Website Studio</h1>
     <div class="menu-toggle" id="menu-toggle">☰</div>
