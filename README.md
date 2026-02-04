@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
     font-family: "Noto Sans TC", sans-serif;
-    background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77); /* 深色漸層 */
+    background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
     color: white;
     overflow-x: hidden;
   }
@@ -168,7 +168,8 @@
   /* ==== 粒子背景 + 連線 + 滑鼠互動 ==== */
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
   let mouseX = canvas.width/2;
   let mouseY = canvas.height/2;
