@@ -110,17 +110,17 @@
   <div class="slides" id="slides">
     <div class="slide">
       <div style="width:100%;height:200px;background:#888;color:white;display:flex;justify-content:center;align-items:center;font-size:24px;border-radius:12px;">
-        作品 1 佔位符
+        作品 1 待定
       </div>
     </div>
     <div class="slide">
       <div style="width:100%;height:200px;background:#888;color:white;display:flex;justify-content:center;align-items:center;font-size:24px;border-radius:12px;">
-        作品 2 佔位符
+        作品 2 待定
       </div>
     </div>
     <div class="slide">
       <div style="width:100%;height:200px;background:#888;color:white;display:flex;justify-content:center;align-items:center;font-size:24px;border-radius:12px;">
-        作品 3 佔位符
+        作品 3 待定
       </div>
     </div>
   </div>
