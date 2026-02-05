@@ -17,7 +17,7 @@
     scroll-behavior: smooth;
   }
 
-  /* 🔹 粒子背景 */
+  /* 粒子背景 */
   #bgCanvas {
     position: fixed;
     top: 0;
@@ -25,11 +25,11 @@
     width: 100vw;
     height: 100vh;
     z-index: 0;
-    will-change: transform; /* ✅ 開啟 GPU 加速 */
+    will-change: transform;
     transform: translateZ(0);
   }
 
-  /* 🔹 header */
+  /* header */
   header {
     position: relative;
     z-index: 1;
@@ -39,7 +39,7 @@
   header h1 { font-size:32px; margin:10px 0; }
   header p.tagline { max-width:600px; margin:0 auto; line-height:1.6; }
 
-  /* 🔹 連結按鈕 */
+  /* 連結按鈕 */
   .link-buttons {
     position: relative;
     z-index: 1;
@@ -52,11 +52,10 @@
   }
   .link-buttons a:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
 
-  /* 🔹 輪播 */
+  /* 輪播 */
   .slider { position:relative; z-index:1; max-width:400px; margin:30px auto; overflow:hidden; border-radius:12px; background: rgba(0,0,0,0.4); }
   .slides { display:flex; transition: transform 0.5s ease-in-out; }
-  .slide { min-width:100%; }
-  .slide img { width:100%; border-radius:12px; display:block; }
+  .slide { min-width:100%; display:flex; justify-content:center; align-items:center; }
   .prev, .next {
     position:absolute; top:50%; transform:translateY(-50%);
     background: rgba(0,0,0,0.5); color:white; border:none; padding:10px; border-radius:50%;
@@ -65,7 +64,7 @@
   .prev { left:10px; } .next { right:10px; }
   .prev:hover, .next:hover { background: rgba(255,255,255,0.8); }
 
-  /* 🔹 小圓點 */
+  /* 小圓點 */
   .dots { text-align:center; margin-top:10px; z-index:1; position:relative; }
   .dot {
     display:inline-block; width:10px; height:10px; margin:0 6px;
@@ -73,12 +72,12 @@
   }
   .dot.active { background:white; }
 
-  /* 🔹 服務區 */
+  /* 服務區 */
   .services { text-align:center; margin:50px 20px; position:relative; z-index:1; }
   .service-list { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
   .service-item { background: rgba(0,0,0,0.6); padding:20px; border-radius:10px; width:250px; }
 
-  /* 🔹 footer */
+  /* footer */
   .footer { text-align:center; margin:40px 0 20px; font-size:14px; position:relative; z-index:1; }
 
   @media (max-width:768px){
@@ -96,8 +95,7 @@
   <h1>Evan Website Studio</h1>
   <p class="tagline">
     嗨，我是 Evan，專門幫個人與品牌打造乾淨、有設計感的網站。<br>
-    不論是個人介紹頁、活動宣傳或作品集網站，我都能協助從設計到上線，<br>
-    讓你的品牌更有質感。
+    不論是個人介紹頁、活動宣傳或作品集網站，我都能協助從設計到上線，讓你的品牌更有質感。
   </p>
 </header>
 
@@ -105,14 +103,26 @@
   <a href="#works">🎨 作品範例</a>
   <a href="#services">🧰 服務項目</a>
   <a href="mailto:upwelling11@gmail.com">💌 聯絡我</a>
-  <a href="https://www.instagram.com/evan.website?igsh=MWpkY3cwNDBhNnNicQ%3D%3D&utm_source=qr">🌐 instagram</a>
-  </div>
+</div>
 
+<!-- 輪播作品範例（佔位符） -->
 <section id="works" class="slider">
   <div class="slides" id="slides">
-    <div class="slide"><img src="images/work1.jpg" alt="作品1"></div>
-    <div class="slide"><img src="images/work2.jpg" alt="作品2"></div>
-    <div class="slide"><img src="images/work3.jpg" alt="作品3"></div>
+    <div class="slide">
+      <div style="width:100%;height:200px;background:#888;color:white;display:flex;justify-content:center;align-items:center;font-size:24px;border-radius:12px;">
+        作品 1 佔位符
+      </div>
+    </div>
+    <div class="slide">
+      <div style="width:100%;height:200px;background:#888;color:white;display:flex;justify-content:center;align-items:center;font-size:24px;border-radius:12px;">
+        作品 2 佔位符
+      </div>
+    </div>
+    <div class="slide">
+      <div style="width:100%;height:200px;background:#888;color:white;display:flex;justify-content:center;align-items:center;font-size:24px;border-radius:12px;">
+        作品 3 佔位符
+      </div>
+    </div>
   </div>
   <button class="prev" id="prev">❮</button>
   <button class="next" id="next">❯</button>
@@ -123,14 +133,17 @@
   <h2>服務項目</h2>
   <div class="service-list">
     <div class="service-item">
+      <div style="width:100%;height:120px;background:#666;color:white;display:flex;justify-content:center;align-items:center;border-radius:10px;margin-bottom:12px;">圖示佔位符</div>
       <h3>客製網站設計</h3>
       <p>依照需求設計專屬頁面，展現個人或品牌特色。</p>
     </div>
     <div class="service-item">
+      <div style="width:100%;height:120px;background:#666;color:white;display:flex;justify-content:center;align-items:center;border-radius:10px;margin-bottom:12px;">圖示佔位符</div>
       <h3>GitHub Pages 架設</h3>
       <p>協助設定並上線網站，穩定又方便。</p>
     </div>
     <div class="service-item">
+      <div style="width:100%;height:120px;background:#666;color:white;display:flex;justify-content:center;align-items:center;border-radius:10px;margin-bottom:12px;">圖示佔位符</div>
       <h3>RWD 響應式設計</h3>
       <p>手機、平板、電腦皆完美呈現，給訪客最佳瀏覽體驗。</p>
     </div>
@@ -180,7 +193,7 @@ canvas.height = window.innerHeight;
 
 const colors = ["#ff4d4d","#ff944d","#fff44d","#4dff4d","#4dffff","#4d4dff","#ff4dff"];
 const particles = [];
-for(let i=0;i<50;i++){ // ✅ 粒子數減少以提升效能
+for(let i=0;i<50;i++){
   particles.push({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
