@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
@@ -16,14 +16,20 @@
     overflow-x: hidden;
   }
 
+  /* 粒子背景 */
   #bgCanvas {
     position: fixed;
-    top:0; left:0;
-    width:100vw; height:100vh;
-    z-index:-1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
   }
 
+  /* 內容區塊 */
   header {
+    position: relative;
+    z-index: 1;
     padding:60px 20px 20px;
     text-align:center;
     background: transparent;
@@ -32,6 +38,8 @@
   header p.tagline { max-width:600px; margin:0 auto; line-height:1.6; }
 
   .link-buttons {
+    position: relative;
+    z-index: 1;
     display:flex; flex-direction:column; align-items:center; gap:12px; margin:30px 0;
   }
   .link-buttons a {
@@ -41,7 +49,7 @@
   }
   .link-buttons a:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
 
-  .slider { position:relative; max-width:400px; margin:30px auto; overflow:hidden; border-radius:12px; background: rgba(0,0,0,0.4); }
+  .slider { position:relative; z-index:1; max-width:400px; margin:30px auto; overflow:hidden; border-radius:12px; background: rgba(0,0,0,0.4); }
   .slides { display:flex; transition: transform 0.5s ease-in-out; }
   .slide { min-width:100%; }
   .slide img { width:100%; border-radius:12px; display:block; }
@@ -53,18 +61,18 @@
   .prev { left:10px; } .next { right:10px; }
   .prev:hover, .next:hover { background: rgba(255,255,255,0.8); }
 
-  .dots { text-align:center; margin-top:10px; }
+  .dots { text-align:center; margin-top:10px; z-index:1; position:relative; }
   .dot {
     display:inline-block; width:10px; height:10px; margin:0 6px;
     background: rgba(255,255,255,0.5); border-radius:50%; cursor:pointer; transition:0.3s;
   }
   .dot.active { background:white; }
 
-  .services { text-align:center; margin:50px 20px; }
+  .services { text-align:center; margin:50px 20px; position:relative; z-index:1; }
   .service-list { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
   .service-item { background: rgba(0,0,0,0.6); padding:20px; border-radius:10px; width:250px; }
 
-  .footer { text-align:center; margin:40px 0 20px; font-size:14px; }
+  .footer { text-align:center; margin:40px 0 20px; font-size:14px; position:relative; z-index:1; }
 
   @media (max-width:768px){
     .slider { max-width:90%; }
@@ -126,7 +134,7 @@
 </div>
 
 <script>
-/* ==== 輪播 + 小圓點 ==== */
+/* === 輪播 === */
 const slides = document.getElementById('slides');
 const totalSlides = slides.children.length;
 let index = 0;
@@ -153,23 +161,17 @@ document.getElementById('next').addEventListener('click',()=>{
 document.getElementById('prev').addEventListener('click',()=>{
   index=(index-1+totalSlides)%totalSlides; updateSlide();
 });
-
 setInterval(()=>{ index=(index+1)%totalSlides; updateSlide(); }, 4000);
 
-/* ==== 彩色流光粒子背景 ==== */
+/* === 彩色流光粒子背景 === */
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let mouseX = canvas.width/2;
-let mouseY = canvas.height/2;
-
-window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
 const colors = ["#ff4d4d","#ff944d","#fff44d","#4dff4d","#4dffff","#4d4dff","#ff4dff"];
 const particles = [];
+
 for(let i=0;i<80;i++){
   particles.push({
     x: Math.random()*canvas.width,
@@ -186,14 +188,8 @@ function animate(){
 
   for(let i=0;i<particles.length;i++){
     const p = particles[i];
-
-    // 粒子微跟隨滑鼠
-    p.dx += (mouseX - p.x) * 0.0005;
-    p.dy += (mouseY - p.y) * 0.0005;
-
     p.x += p.dx;
     p.y += p.dy;
-
     if(p.x<0||p.x>canvas.width) p.dx*=-1;
     if(p.y<0||p.y>canvas.height) p.dy*=-1;
 
@@ -210,23 +206,28 @@ function animate(){
       const dy = p.y - p2.y;
       const dist = Math.sqrt(dx*dx + dy*dy);
       if(dist<120){
-        const alpha = 0.2*(1-dist/120);
         const grad = ctx.createLinearGradient(p.x,p.y,p2.x,p2.y);
-        grad.addColorStop(0,p.color+"88");
-        grad.addColorStop(1,p2.color+"88");
+        grad.addColorStop(0,p.color);
+        grad.addColorStop(1,p2.color);
         ctx.strokeStyle = grad;
+        ctx.globalAlpha = 0.2*(1-dist/120);
         ctx.beginPath();
         ctx.moveTo(p.x,p.y);
         ctx.lineTo(p2.x,p2.y);
         ctx.stroke();
+        ctx.globalAlpha = 1;
       }
     }
   }
 
   requestAnimationFrame(animate);
 }
-
 animate();
+
+window.addEventListener('resize',()=>{
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 </script>
 
 </body>
