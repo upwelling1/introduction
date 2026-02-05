@@ -105,7 +105,8 @@
   <a href="#works">🎨 作品範例</a>
   <a href="#services">🧰 服務項目</a>
   <a href="mailto:upwelling11@gmail.com">💌 聯絡我</a>
-  <a href="https://www.instagram.com/evan.website?igsh=MWpkY3cwNDBhNnNicQ%3D%3D&utm_source=qr">🌐 instagram/a></div>
+  <a href="https://www.instagram.com/evan.website?igsh=MWpkY3cwNDBhNnNicQ%3D%3D&utm_source=qr">🌐 instagram/a>
+  </div>
 
 <section id="works" class="slider">
   <div class="slides" id="slides">
