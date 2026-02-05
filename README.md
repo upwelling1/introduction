@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
@@ -14,9 +14,10 @@
     background: linear-gradient(135deg, #1a3f6f, #006b8f);
     color: white;
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
-  /* 粒子背景 */
+  /* 🔹 粒子背景 */
   #bgCanvas {
     position: fixed;
     top: 0;
@@ -24,19 +25,21 @@
     width: 100vw;
     height: 100vh;
     z-index: 0;
+    will-change: transform; /* ✅ 開啟 GPU 加速 */
+    transform: translateZ(0);
   }
 
-  /* 內容區塊 */
+  /* 🔹 header */
   header {
     position: relative;
     z-index: 1;
     padding:60px 20px 20px;
     text-align:center;
-    background: transparent;
   }
   header h1 { font-size:32px; margin:10px 0; }
   header p.tagline { max-width:600px; margin:0 auto; line-height:1.6; }
 
+  /* 🔹 連結按鈕 */
   .link-buttons {
     position: relative;
     z-index: 1;
@@ -49,6 +52,7 @@
   }
   .link-buttons a:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
 
+  /* 🔹 輪播 */
   .slider { position:relative; z-index:1; max-width:400px; margin:30px auto; overflow:hidden; border-radius:12px; background: rgba(0,0,0,0.4); }
   .slides { display:flex; transition: transform 0.5s ease-in-out; }
   .slide { min-width:100%; }
@@ -61,6 +65,7 @@
   .prev { left:10px; } .next { right:10px; }
   .prev:hover, .next:hover { background: rgba(255,255,255,0.8); }
 
+  /* 🔹 小圓點 */
   .dots { text-align:center; margin-top:10px; z-index:1; position:relative; }
   .dot {
     display:inline-block; width:10px; height:10px; margin:0 6px;
@@ -68,10 +73,12 @@
   }
   .dot.active { background:white; }
 
+  /* 🔹 服務區 */
   .services { text-align:center; margin:50px 20px; position:relative; z-index:1; }
   .service-list { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
   .service-item { background: rgba(0,0,0,0.6); padding:20px; border-radius:10px; width:250px; }
 
+  /* 🔹 footer */
   .footer { text-align:center; margin:40px 0 20px; font-size:14px; position:relative; z-index:1; }
 
   @media (max-width:768px){
@@ -163,7 +170,7 @@ document.getElementById('prev').addEventListener('click',()=>{
 });
 setInterval(()=>{ index=(index+1)%totalSlides; updateSlide(); }, 4000);
 
-/* === 彩色流光粒子背景 === */
+/* === 平滑版彩色流光粒子背景 === */
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -171,8 +178,7 @@ canvas.height = window.innerHeight;
 
 const colors = ["#ff4d4d","#ff944d","#fff44d","#4dff4d","#4dffff","#4d4dff","#ff4dff"];
 const particles = [];
-
-for(let i=0;i<80;i++){
+for(let i=0;i<50;i++){ // ✅ 粒子數減少以提升效能
   particles.push({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
@@ -183,7 +189,7 @@ for(let i=0;i<80;i++){
   });
 }
 
-function animate(){
+function animate(time){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
   for(let i=0;i<particles.length;i++){
@@ -193,13 +199,11 @@ function animate(){
     if(p.x<0||p.x>canvas.width) p.dx*=-1;
     if(p.y<0||p.y>canvas.height) p.dy*=-1;
 
-    // 畫粒子
     ctx.beginPath();
     ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
     ctx.fillStyle = p.color;
     ctx.fill();
 
-    // 畫連線
     for(let j=i+1;j<particles.length;j++){
       const p2 = particles[j];
       const dx = p.x - p2.x;
@@ -210,7 +214,7 @@ function animate(){
         grad.addColorStop(0,p.color);
         grad.addColorStop(1,p2.color);
         ctx.strokeStyle = grad;
-        ctx.globalAlpha = 0.2*(1-dist/120);
+        ctx.globalAlpha = 0.15*(1-dist/120);
         ctx.beginPath();
         ctx.moveTo(p.x,p.y);
         ctx.lineTo(p2.x,p2.y);
