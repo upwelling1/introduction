@@ -133,22 +133,20 @@
   <h2>服務項目</h2>
   <div class="service-list">
     <div class="service-item">
-      <div style="width:100%;height:120px;background:#666;color:white;display:flex;justify-content:center;align-items:center;border-radius:10px;margin-bottom:12px;">圖示佔位符</div>
       <h3>客製網站設計</h3>
       <p>依照需求設計專屬頁面，展現個人或品牌特色。</p>
     </div>
     <div class="service-item">
-      <div style="width:100%;height:120px;background:#666;color:white;display:flex;justify-content:center;align-items:center;border-radius:10px;margin-bottom:12px;">圖示佔位符</div>
       <h3>GitHub Pages 架設</h3>
       <p>協助設定並上線網站，穩定又方便。</p>
     </div>
     <div class="service-item">
-      <div style="width:100%;height:120px;background:#666;color:white;display:flex;justify-content:center;align-items:center;border-radius:10px;margin-bottom:12px;">圖示佔位符</div>
       <h3>RWD 響應式設計</h3>
       <p>手機、平板、電腦皆完美呈現，給訪客最佳瀏覽體驗。</p>
     </div>
   </div>
 </section>
+
 
 <div class="footer">
   © 2026 Evan Website Studio<br>
